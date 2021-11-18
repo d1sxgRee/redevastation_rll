@@ -17,6 +17,8 @@ class LvlMap{
   int cell_read(Coords cell);
   LvlMap(const LvlMap&)=delete;
   LvlMap& operator=(const LvlMap&)=delete;
+  void dig_rectangle(Coords start, Coords end);
+  Coords get_size(){return size;};
 };
 
 #endif // LVLMAP_H

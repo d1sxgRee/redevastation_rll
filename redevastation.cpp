@@ -3,8 +3,8 @@
 #include "LvlGenBSP.h"
 
 int main(){
-  LvlGenBSP *generator = new LvlGenBSP;
-  Coords size = {3, 3};
+  LvlGen *generator = new LvlGenBSP;
+  Coords size = {100, 100};
   LvlMap *map = generator->generate(size);
   for(int y = 0; y < size.y; y++){
     for(int x = 0; x < size.x; x++){
