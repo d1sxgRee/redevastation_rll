@@ -1,14 +1,23 @@
 #include "LvlGenBSP.h"
+#include <random>
 
 struct BspNode{
   BspNode *left = nullptr;
   BspNode *right = nullptr;
   Coords start;
   Coords end;
+  constexpr static int minsize = 7;
   void split_vertical(int splitter);
   void split_horizontal(int splitter);
+  void split_random(std::default_random_engine &engine);
   void dig(LvlMap *map);
+  ~BspNode();
 };
+
+BspNode::~BspNode(){
+  delete(left);
+  delete(right);
+}
 
 void BspNode::split_vertical(int splitter){
   left = new BspNode;
@@ -27,6 +36,24 @@ void BspNode::split_horizontal(int splitter){
   left->end = {end.x, start.y + splitter - 1};
   right->start = {start.x, start.y + splitter + 1};
   right->end = end;
+  return;
+}
+
+void BspNode::split_random(std::default_random_engine &engine){
+  if(end.x - start.x <= minsize || end.y - start.y <= minsize){
+    return;
+  }
+  std::uniform_int_distribution<int> rdirection(0, 1);
+  if(rdirection(engine)){
+    std::uniform_int_distribution<int> rsplitter(3, (end.x - start.x) - 3);
+    split_vertical(rsplitter(engine));
+  }
+  else{
+    std::uniform_int_distribution<int> rsplitter(3, (end.y - start.y) - 3);
+    split_horizontal(rsplitter(engine));
+  }
+  right->split_random(engine);
+  left->split_random(engine);
   return;
 }
 
@@ -57,10 +84,11 @@ LvlMap *LvlGenBSP::generate(Coords size){
   BspNode *root = new BspNode;
   root->start = {1, 1};
   root->end = {size.x - 2, size.x - 2};
-  root->split_vertical(50);
-  root->left->split_horizontal(76);
-  root->left->right->split_vertical(25);
-  root->right->split_horizontal(60);
+
+  std::random_device rd;
+  std::default_random_engine re(rd());
+  root->split_random(re);
+  
   root->dig(map);
   return map;
 }
