@@ -5,7 +5,13 @@ OBJMODULES = $(SRCMODULES:.cpp=.o)
 TARGET=redevastation
 CXX=x86_64-w64-mingw32-g++
 
+linux: CXX=g++
+linux: CXXFLAGS=-g
+
 all: ${TARGET}.exe
+
+linux: ${OBJMODULES}
+	${CXX} -o ${TARGET} $^
 
 ${TARGET}.exe: ${OBJMODULES}
 	${CXX} -o ${TARGET}.exe $^

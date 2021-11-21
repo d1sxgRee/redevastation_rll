@@ -6,13 +6,20 @@ struct BspNode{
   BspNode *right = nullptr;
   Coords start;
   Coords end;
-  constexpr static int minsize = 7;
+  static constexpr int minsize = 10;
+  static constexpr int wall_offset = 5;
   void split_vertical(int splitter);
   void split_horizontal(int splitter);
   void split_random(std::default_random_engine &engine);
-  void dig(LvlMap *map);
+  void dig(LvlMap *map, std::default_random_engine &engine);
+  BspNode() = default;
   ~BspNode();
+  BspNode(const BspNode&) = delete;
+  BspNode operator=(const BspNode&) = delete;
 };
+
+constexpr int BspNode::minsize;
+constexpr int BspNode::wall_offset;
 
 BspNode::~BspNode(){
   delete(left);
@@ -40,16 +47,30 @@ void BspNode::split_horizontal(int splitter){
 }
 
 void BspNode::split_random(std::default_random_engine &engine){
-  if(end.x - start.x <= minsize || end.y - start.y <= minsize){
+  if(end.x - start.x <= minsize && end.y - start.y <= minsize){
+    return;
+  }
+  if(end.x - start.x <= minsize){
+    std::uniform_int_distribution<int> rsplitter(std::max(wall_offset, (end.y - start.y) / 4),
+                                                 std::min((end.y - start.y) - wall_offset, (end.y - start.y) / 4 * wall_offset));
+    split_horizontal(rsplitter(engine));
+    return;
+  }
+  if(end.y - start.y <= minsize){
+    std::uniform_int_distribution<int> rsplitter(std::max(wall_offset, (end.x - start.x) / 4),
+                                                 std::min((end.x - start.x) - wall_offset, (end.x - start.x) / 4 * wall_offset));
+    split_vertical(rsplitter(engine));
     return;
   }
   std::uniform_int_distribution<int> rdirection(0, 1);
   if(rdirection(engine)){
-    std::uniform_int_distribution<int> rsplitter(3, (end.x - start.x) - 3);
+    std::uniform_int_distribution<int> rsplitter(std::max(wall_offset, (end.x - start.x) / 4),
+                                                 std::min((end.x - start.x) - wall_offset, (end.x - start.x) / 4 * wall_offset));
     split_vertical(rsplitter(engine));
   }
   else{
-    std::uniform_int_distribution<int> rsplitter(3, (end.y - start.y) - 3);
+    std::uniform_int_distribution<int> rsplitter(std::max(wall_offset, (end.y - start.y) / 4),
+                                                 std::min((end.y - start.y) - wall_offset, (end.y - start.y) / 4 * wall_offset));
     split_horizontal(rsplitter(engine));
   }
   right->split_random(engine);
@@ -57,13 +78,16 @@ void BspNode::split_random(std::default_random_engine &engine){
   return;
 }
 
-void BspNode::dig(LvlMap *map){
+void BspNode::dig(LvlMap *map, std::default_random_engine &engine){
   if(left == nullptr && right == nullptr){
-    map->dig_rectangle(start, end);
+    std::uniform_int_distribution<int> rdigger(0, 3);
+    if(rdigger(engine)){
+      map->dig_rectangle({start.x + 1, start.y + 1}, {end.x - 1, end.y - 1});
+    }
   }
   else{
-    left->dig(map);
-    right->dig(map);
+    left->dig(map, engine);
+    right->dig(map, engine);
     map->dig_rectangle({
         (left->start.x + left->end.x) / 2,
         (left->start.y + left->end.y) / 2}, {
@@ -89,6 +113,6 @@ LvlMap *LvlGenBSP::generate(Coords size){
   std::default_random_engine re(rd());
   root->split_random(re);
   
-  root->dig(map);
+  root->dig(map, re);
   return map;
 }
