@@ -4,7 +4,7 @@
 
 int main(){
   LvlGen *generator = new LvlGenBSP;
-  Coords size = {50, 50};
+  Coords size = {25, 25};
   LvlMap *map = generator->generate(size);
   for(int y = 0; y < size.y; y++){
     for(int x = 0; x < size.x; x++){
