@@ -32,7 +32,14 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="main.cpp" />
+		<Unit filename="Coords.h" />
+		<Unit filename="LvlGen.h" />
+		<Unit filename="LvlGenBSP.cpp" />
+		<Unit filename="LvlGenBSP.h" />
+		<Unit filename="LvlMap.cpp" />
+		<Unit filename="LvlMap.h" />
+		<Unit filename="TXLib.h" />
+		<Unit filename="redevastation.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
