@@ -7,6 +7,7 @@ void Engine::new_game_init(){
       fov->cell_set({x, y}, 1);
     }
   }
+  fov->dig_rectangle({1, 1}, {View::view_size - 2, View::view_size - 3});
   return;
 }
 

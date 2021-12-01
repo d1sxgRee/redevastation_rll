@@ -1,5 +1,6 @@
 #include "CursedInterface.h"
 #include <ncurses.h>
+#include <cassert>
 
 #define KEY_ESCAPE 27
 
@@ -7,25 +8,44 @@ void CursedInterface::start(){
   initscr();
   keypad(stdscr, TRUE);
   int input = 0;
+  View v = engine->make_step(CMD_NOTHING);
+  Command c;
   do{
     clear();
-    mvprintw(10, 10, "@");
+    for(int y = 0; y < View::view_size; y++){
+      for(int x = 0; x < View::view_size; x++){
+        Coords c = {x, y};
+        switch(v.map_get()->cell_read(c)){
+        case 0:
+          mvprintw(y, x, ".");
+          break;
+        case 1:
+          mvprintw(y, x, "#");
+          break;
+        default:
+          assert(false);
+        }
+      }
+    }
+    mvprintw(View::view_size / 2, View::view_size / 2, "@");
     switch(input){
     case 'a':
-      mvprintw(0, 0, "WEST");
+      c = CMD_LEFT;
       break;
     case 'w':
-      mvprintw(0, 0, "NORTH");
+      c = CMD_UP;
       break;
     case 'd':
-      mvprintw(0, 0, "EAST");
+      c = CMD_RIGHT;
       break;
     case 's':
-      mvprintw(0, 0, "SOUTH");
+      c = CMD_DOWN;
       break;
     default:
+      c = CMD_NOTHING;
       break;
     }
+    v = engine->make_step(c);
     refresh();
     input = getch();
   }while(input != KEY_ESCAPE);
@@ -33,22 +53,7 @@ void CursedInterface::start(){
   return;
 }
 
-// LvlGen *generator = new LvlGenBSP;
-//   Coords size = {25, 25};
-//   LvlMap *map = generator->generate(size);
-//   for(int y = 0; y < size.y; y++){
-//     for(int x = 0; x < size.x; x++){
-//       Coords c = {x, y};
-//       switch(map->cell_read(c)){
-//       case 0:
-//         std::cout << " ";
-//         break;
-//       case 1:
-//         std::cout << "#";
-//         break;
-//       default:
-//         assert(false);
-//       }
-//     }
-//     std::cout << std::endl;
-//   }
+
+
+
+  

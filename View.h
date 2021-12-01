@@ -9,7 +9,7 @@ class View{
  public:
   constexpr static int view_size = 15;
   explicit View(LvlMap *map) : map(map){};
-  ~View(){delete map;};
+  ~View(){};
   LvlMap *map_get(){return map;};
 };
 
