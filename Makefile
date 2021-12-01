@@ -1,4 +1,10 @@
-SRCMODULES = redevastation.cpp LvlGenBSP.cpp LvlMap.cpp Engine.cpp CursedInterface.cpp 
+SRCMODULES =\
+	redevastation.cpp \
+	LvlGenBSP.cpp\
+	LvlMap.cpp \
+	Engine.cpp \
+	CursedInterface.cpp \
+	Level.cpp
 OBJMODULES = $(SRCMODULES:.cpp=.o)
 .PHONY: clean
 
