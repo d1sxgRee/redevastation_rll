@@ -32,6 +32,10 @@
 *.app
 redevastation
 
+# Editor files
+*~
+
 # Code::blocks
 bin/*
 *.depend
+*.layout
