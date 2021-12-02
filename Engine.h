@@ -4,6 +4,7 @@
 #include "Command.h"
 #include "View.h"
 #include "Level.h"
+#include "Creature.h"
 #include <list>
 
 class Engine{

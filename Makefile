@@ -4,7 +4,9 @@ SRCMODULES =\
 	LvlMap.cpp \
 	Engine.cpp \
 	CursedInterface.cpp \
-	Level.cpp
+	Level.cpp\
+	Creature.cpp\
+	Material.cpp
 OBJMODULES = $(SRCMODULES:.cpp=.o)
 .PHONY: clean
 
