@@ -19,5 +19,6 @@ void Engine::new_game_init(){
 }
 
 View Engine::make_step(Command c){
+  levels.back()->fov_get({0, 0}, fov);
   return View(fov);
 }
