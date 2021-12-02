@@ -10,11 +10,12 @@
 class Engine{
  private:
   LvlMap *fov;
+  Creature player;
   std::list<Level*> levels = {};
  public:
   void new_game_init();
   View make_step(Command c);
-  Engine(): levels() {};
+  Engine(): levels(), player({0, 0}, nullptr) {};
   ~Engine(){delete fov;};
 };
 
