@@ -14,7 +14,7 @@ TARGET=redevastation
 CXX=x86_64-w64-mingw32-g++
 
 linux: CXX=g++
-linux: CXXFLAGS=-g `pkg-config --cflags ncurses`
+linux: CXXFLAGS=-g `pkg-config --cflags ncurses` -DLINUX
 linux: LDFLAGS=`pkg-config --libs ncurses`
 
 all: ${TARGET}.exe
