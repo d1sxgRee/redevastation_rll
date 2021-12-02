@@ -27,18 +27,45 @@
 					<Add option="-s" />
 				</Linker>
 			</Target>
+			<Target title="Linux_debug">
+				<Option output="Redevastation" prefix_auto="1" extension_auto="1" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wl,-Bsymbolic-functions -lncurses -ltinfo -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=600" />
+					<Add option="-DLINUX=1" />
+				</Compiler>
+				<Linker>
+					<Add option="-Wl,-Bsymbolic-functions -lncurses -ltinfo" />
+					<Add library="/usr/lib/x86_64-linux-gnu/libncurses.a" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Command.h" />
 		<Unit filename="Coords.h" />
+		<Unit filename="Creature.cpp" />
+		<Unit filename="Creature.h" />
+		<Unit filename="CursedInterface.cpp" />
+		<Unit filename="CursedInterface.h" />
+		<Unit filename="Direction.h" />
+		<Unit filename="Engine.cpp" />
+		<Unit filename="Engine.h" />
+		<Unit filename="Interface.h" />
+		<Unit filename="Level.cpp" />
+		<Unit filename="Level.h" />
 		<Unit filename="LvlGen.h" />
 		<Unit filename="LvlGenBSP.cpp" />
 		<Unit filename="LvlGenBSP.h" />
 		<Unit filename="LvlMap.cpp" />
 		<Unit filename="LvlMap.h" />
+		<Unit filename="Material.cpp" />
+		<Unit filename="Material.h" />
 		<Unit filename="TXLib.h" />
+		<Unit filename="View.h" />
 		<Unit filename="redevastation.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
