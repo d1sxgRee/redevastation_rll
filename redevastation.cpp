@@ -14,6 +14,7 @@ int main(){
   #ifdef LINUX
   Interface *interface = new CursedInterface(&engine);
   #else
+  Interface *interface = new TXLibInterface(&engine);
   #endif
   interface->start();
   return 0;

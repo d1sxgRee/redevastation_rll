@@ -10,26 +10,26 @@ void CursedInterface::start(){
   curs_set(0);
   int input = 0;
   View v = engine->make_step(CMD_NOTHING);
-  Command c;
+  Command cmd;
   do{
     switch(input){
     case 'a':
-      c = CMD_LEFT;
+      cmd = CMD_LEFT;
       break;
     case 'w':
-      c = CMD_UP;
+      cmd = CMD_UP;
       break;
     case 'd':
-      c = CMD_RIGHT;
+      cmd = CMD_RIGHT;
       break;
     case 's':
-      c = CMD_DOWN;
+      cmd = CMD_DOWN;
       break;
     default:
-      c = CMD_NOTHING;
+      cmd = CMD_NOTHING;
       break;
     }
-    v = engine->make_step(c);
+    v = engine->make_step(cmd);
     clear();
     for(int y = 0; y < View::view_size; y++){
       for(int x = 0; x < View::view_size; x++){

@@ -16,7 +16,7 @@ void Engine::new_game_init(){
   Level *first_lvl = new Level(m);
   levels.push_back(first_lvl);
 
-  player.move({13, 13});
+  player.move({12, 12});
   player.level_set(levels.back());
   
   return;

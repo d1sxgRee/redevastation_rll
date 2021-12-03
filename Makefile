@@ -3,11 +3,11 @@ SRCMODULES =\
 	LvlGenBSP.cpp\
 	LvlMap.cpp \
 	Engine.cpp \
-	CursedInterface.cpp \
 	Level.cpp\
 	Creature.cpp\
 	Material.cpp
-OBJMODULES = $(SRCMODULES:.cpp=.o)
+OBJMODULES=$(SRCMODULES:.cpp=.o)
+
 .PHONY: clean
 
 TARGET=redevastation
@@ -20,10 +20,12 @@ linux: LDFLAGS=`pkg-config --libs ncurses`
 all: ${TARGET}.exe
 
 linux: ${OBJMODULES}
-	${CXX} -o ${TARGET} $^ ${LDFLAGS}
+	$(CXX) $(CFLAGS) $(CXXFLAGS) -c CursedInterface.cpp
+	${CXX} -o ${TARGET} CursedInterface.o $^ ${LDFLAGS}
 
 ${TARGET}.exe: ${OBJMODULES}
-	${CXX} -o ${TARGET}.exe $^
+	$(CXX) $(CFLAGS) $(CXXFLAGS) -c TXLibInterface.cpp
+	${CXX} -o ${TARGET}.exe TXLibInterface.o $^
 
 %.o: %.cpp %.h
 	$(CXX) $(CFLAGS) $(CXXFLAGS) -c $< -o $@
