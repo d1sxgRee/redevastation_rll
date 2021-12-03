@@ -65,6 +65,14 @@
 		<Unit filename="Material.cpp" />
 		<Unit filename="Material.h" />
 		<Unit filename="TXLib.h" />
+		<Unit filename="TXLibInterface.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="TXLibInterface.h">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
 		<Unit filename="View.h" />
 		<Unit filename="redevastation.cpp" />
 		<Extensions>
